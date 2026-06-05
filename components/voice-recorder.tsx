@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { Mic } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useVoiceRecorder } from '@/hooks/use-voice-recorder';
 import { parseVoiceCommand, speak } from '@/lib/voice-utils';
@@ -40,7 +39,7 @@ export function VoiceRecorder() {
     refreshStats();
   }, []);
 
-  // 🎤 MAIN VOICE HANDLER
+  // 🎤 VOICE HANDLER
   async function handleTranscript(text: string) {
     setIsProcessing(true);
     setLastCommand(text);
@@ -74,7 +73,9 @@ export function VoiceRecorder() {
       if (normalized.includes('aaj') && normalized.includes('kis')) {
         const data = await getTodayEntries();
 
-        const names = [...new Set(data.map((e) => e.customer_name))];
+        const names = Array.from(
+          new Set(data.map((e) => e.customer_name))
+        );
 
         const msg =
           names.length > 0
@@ -88,7 +89,7 @@ export function VoiceRecorder() {
         return;
       }
 
-      // 🟢 3. NORMAL ENTRY (SALE / PAYMENT)
+      // 🟢 3. NORMAL ENTRY
       const command = parseVoiceCommand(text);
 
       if (!command) {
@@ -171,7 +172,7 @@ export function VoiceRecorder() {
         {/* STATS */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card className="p-4 text-center">
-            <p>आज की कret (केले)</p>
+            <p>आज की kret (केले)</p>
             <h2 className="text-2xl font-bold">{totalKret}</h2>
           </Card>
 
